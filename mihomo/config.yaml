@@ -1,0 +1,248 @@
+anchor:
+  pr: &pr {type: select, proxies: [Proxy,Hong Kong,Taiwan,Singapore,Japan,United States,Europe,Other]}
+  p: &p {type: http, interval: 86400, health-check: {enable: true, url: https://www.gstatic.com/generate_204, interval: 300}}
+  lp: &lp {type: file, interval: 86400, health-check: {enable: true, url: https://www.gstatic.com/generate_204, interval: 300}}
+
+  ip: &ip {type: http, interval: 86400, proxy: Proxy,  behavior: ipcidr, format: yaml}
+  domain-yaml: &domain-yaml {type: http, interval: 86400, proxy: Proxy, behavior: domain, format: yaml}
+  domain-text: &domain-text {type: http, interval: 86400, proxy: Proxy, behavior: domain, format: text}
+  classical-yaml: &classical-yaml {type: http, interval: 86400, proxy: Proxy, behavior: classical, format: yaml}
+  local: &local {type: file, interval: 86400, behavior: classical, format: text}
+  local-ip: &local-ip {type: file, interval: 86400, behavior: ipcidr, format: text}
+
+mixed-port: 7890
+allow-lan: true
+external-controller: 127.0.0.1:9009
+external-ui: Dashboard
+
+log-level: info
+ipv6: true
+unified-delay: true
+tcp-concurrent: true
+
+find-process-mode: always
+
+profile:
+  store-selected: true
+  store-fake-ip: false
+
+sniffer:
+  enable: true
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    QUIC:
+      ports: [443, 8443]
+    TLS:
+      ports: [443, 8443]
+      
+tun:
+  enable: true
+  stack: system
+  inet4-address:
+    - 172.19.0.0/16
+  inet6-address:
+    - "2001:18::/28"
+  dns-hijack:
+    - "any:53"
+  mtu: 1500
+  device: Origin
+  auto-route: true
+  auto-detect-interface: true
+
+dns:
+  enable: true
+  listen: :1053
+  ipv6: true
+  prefer-h3: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.0/15
+  fake-ip-filter:
+    - "*"
+    - "+.lan"
+    - "+.local"
+    - "+.msftncsi.com"
+    - "+.msftconnecttest.com"
+  nameserver:
+    - "tcp://8.8.8.8#Proxy"
+    - "tcp://1.1.1.1#Proxy"
+    - "tcp://9.9.9.11#Proxy"
+    - "tcp://208.67.220.220#Proxy"
+  proxy-server-nameserver:
+    - "https://223.5.5.5/dns-query"
+  nameserver-policy:
+    "rule-set:cn-domain,geolocation-!cn@cn,private-domain":
+      - "223.5.5.5"
+    "rule-set:block-domain-custom":
+      - rcode://success
+
+proxies:
+  - name: "DNS_Hijack"
+    type: dns
+
+proxy-groups:
+  - {name: Proxy, type: select, proxies: [Hong Kong,Taiwan,Singapore,Japan,United States,Europe,Other]}
+  - {name: Telegram, type: select, proxies: [Proxy,Singapore,United States,Europe]}
+  - {name: YouTube, <<: *pr}
+  - {name: Netflix, type: select, proxies: [Singapore,Japan,United States,Other]}
+  - {name: Bilibili, type: select, proxies: [DIRECT,Hong Kong,Taiwan]}
+  - {name: Google, <<: *pr}
+  - {name: Steam, <<: *pr}
+  - {name: Spotify, <<: *pr}
+
+  - {name: Hong Kong, type: select , include-all-providers: true, filter: "香港|HK|Hong Kong"}
+  - {name: Taiwan, type: select , include-all-providers: true, filter: "台湾|TW|Taiwan"}
+  - {name: Singapore, type: select , include-all-providers: true, filter: "(新加坡|SG|Singapore)"}
+  - {name: Japan, type: select , include-all-providers: true, filter: "日本|JP|Japan"}
+  - {name: United States, type: select , include-all-providers: true, filter: "美国|US|United States"}
+  - {name: Europe, type: select , include-all-providers: true, filter: "(France|Germany|UK|Switzerland|Bulgaria|瑞士|法国|德国)"}
+  - {name: Other, type: select , include-all-providers: true, filter: "^(?!.*(?:🇭🇰|🇯🇵|🇺🇸|🇸🇬|🇨🇳|香港|HK|Hong Kong|台湾|TW|Taiwan|日本|JP|Japan|新加坡|SG|Singapore|美国|US|United States|France|Germany|UK|Switzerland|Bulgaria|瑞士|法国|德国|Expire Date|Traffic Reset|GB)).*"}
+
+rule-providers:
+  private-domain:
+    <<: *domain-yaml
+    url: "https://raw.githubusercontent.com/Yuu518/mihomo-rules/rule-set/geosite/private.yaml"
+    path: ./RuleProviders/private-domain.yaml
+
+  telegram-domain:
+    <<: *domain-yaml
+    url: "https://raw.githubusercontent.com/Yuu518/mihomo-rules/rule-set/geosite/telegram.yaml"
+    path: ./RuleProviders/telegram-domain.yaml
+    
+  youtube-domain:
+    <<: *domain-yaml
+    url: "https://raw.githubusercontent.com/Yuu518/mihomo-rules/rule-set/geosite/youtube.yaml"
+    path: ./RuleProviders/youtune-domain.yaml
+    
+  netflix-domain:
+    <<: *domain-yaml
+    url: "https://raw.githubusercontent.com/Yuu518/mihomo-rules/rule-set/geosite/netflix.yaml"
+    path: ./RuleProviders/netflix-domain.yaml
+
+  microsoft-domain:
+    <<: *domain-yaml
+    url: "https://raw.githubusercontent.com/Yuu518/mihomo-rules/rule-set/geosite/microsoft.yaml"
+    path: ./RuleProviders/microsoft-domain.yaml
+    
+  bilibili-domain:
+    <<: *domain-yaml
+    url: "https://raw.githubusercontent.com/Yuu518/mihomo-rules/rule-set/geosite/bilibili.yaml"
+    path: ./RuleProviders/bilibili-domain.yaml
+    
+  bahamut-domain:
+    <<: *domain-yaml
+    url: "https://raw.githubusercontent.com/Yuu518/mihomo-rules/rule-set/geosite/bahamut.yaml"
+    path: ./RuleProviders/bahamut-domain.yaml
+
+  google-domain:
+    <<: *domain-yaml
+    url: "https://raw.githubusercontent.com/Yuu518/mihomo-rules/rule-set/geosite/google.yaml"
+    path: ./RuleProviders/google-domain.yaml
+
+  steam-domain:
+    <<: *domain-yaml
+    url: "https://raw.githubusercontent.com/Yuu518/mihomo-rules/rule-set/geosite/steam.yaml"
+    path: ./RuleProviders/steam-domain.yaml
+
+  spotify-domain:
+    <<: *domain-yaml
+    url: "https://raw.githubusercontent.com/Yuu518/mihomo-rules/rule-set/geosite/spotify.yaml"
+    path: ./RuleProviders/spotify-domaim.yaml
+
+  ai-domain:
+    <<: *domain-yaml
+    url: "https://raw.githubusercontent.com/Yuu518/mihomo-rules/rule-set/geosite/ai.yaml"
+    path: ./RuleProviders/ai.yaml
+
+  cn-domain:
+    <<: *domain-yaml
+    url: "https://raw.githubusercontent.com/Yuu518/mihomo-rules/rule-set/geosite/cn.yaml"
+    path: ./RuleProviders/cn-domain.yaml
+
+  geolocation-!cn:
+    <<: *domain-yaml
+    url: "https://raw.githubusercontent.com/Yuu518/rules/release/clash/geolocation-!cn.yaml"
+    path: ./RuleProviders/geolocation-!cn.yaml
+
+  geolocation-cn@!cn:
+    <<: *domain-yaml
+    url: "https://raw.githubusercontent.com/Yuu518/rules/release/clash/geolocation-cn@!cn.yaml"
+    path: ./RuleProviders/geolocation-cn@!cn.yaml
+    
+  geolocation-!cn@cn:
+    <<: *domain-yaml
+    url: "https://raw.githubusercontent.com/Yuu518/rules/release/clash/geolocation-!cn@cn.yaml"
+    path: ./RuleProviders/geolocation-!cn@cn.yaml
+
+  telegram-ip:
+    <<: *ip
+    url: "https://raw.githubusercontent.com/Yuu518/mihomo-rules/rule-set/geoip/telegram.yaml"
+    path: ./RuleProviders/telegram-ip.yaml
+
+  google-ip:
+    <<: *ip
+    url: "https://raw.githubusercontent.com/Yuu518/mihomo-rules/rule-set/geoip/google.yaml"
+    path: ./RuleProviders/google-ip.yaml
+    
+  netflix-ip:
+    <<: *ip
+    url: "https://raw.githubusercontent.com/Yuu518/mihomo-rules/rule-set/geoip/netflix.yaml"
+    path: ./RuleProviders/netflix-ip.yaml
+
+  private-ip:
+    <<: *ip
+    url: "https://raw.githubusercontent.com/Yuu518/mihomo-rules/rule-set/geoip/private.yaml"
+    path: ./RuleProviders/private-ip.yaml
+
+  cn-ip:
+    <<: *ip
+    url: "https://raw.githubusercontent.com/Yuu518/mihomo-rules/rule-set/geoip/cn.yaml"
+    path: ./RuleProviders/cn-ip.yaml
+
+  block-domain-custom:
+    <<: *local
+    path: ./RuleProviders/block-domain-custom.list
+
+rules:
+  - DST-PORT,53,DNS_Hijack
+  - RULE-SET,private-domain,DIRECT
+  - AND,((NETWORK,UDP),(DST-PORT,443)),REJECT
+  - RULE-SET,block-domain-custom,REJECT
+  - RULE-SET,youtube-domain,YouTube
+  - RULE-SET,telegram-domain,Telegram
+  - RULE-SET,netflix-domain,Netflix
+  - RULE-SET,bilibili-domain,Bilibili
+  - RULE-SET,bahamut-domain,Taiwan
+  - RULE-SET,steam-domain,Steam
+  - RULE-SET,spotify-domain,Spotify
+  - RULE-SET,microsoft-domain,Proxy
+  - RULE-SET,ai-domain,United States
+  - RULE-SET,google-domain,Google
+  - RULE-SET,geolocation-!cn,Proxy
+  - RULE-SET,geolocation-cn@!cn,Proxy
+  - RULE-SET,geolocation-!cn@cn,DIRECT
+  - RULE-SET,cn-domain,DIRECT
+
+  - RULE-SET,private-ip,DIRECT
+  - RULE-SET,direct-ip-custom,DIRECT
+  - RULE-SET,telegram-ip,Telegram
+  - RULE-SET,netflix-ip,Netflix
+  - RULE-SET,google-ip,Google
+  - RULE-SET,cn-ip,DIRECT
+  - MATCH,Proxy
+
+proxy-providers:
+  provider1:
+    <<: *p
+    url: ""
+    path: ./ProxyProviders/provider1.yaml
+
+  provider2:
+    <<: *p
+    url: ""
+    path: ./ProxyProviders/provider2.yaml
+
+  自建:
+    <<: *lp
+    path: ./ProxyProviders/自建.yaml

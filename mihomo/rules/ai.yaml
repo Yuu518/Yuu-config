@@ -1,0 +1,43 @@
+payload:
+  # ChatGPT
+  - DOMAIN,api.statsig.com
+  - DOMAIN,api-iam.intercom.io
+  - DOMAIN,chatgpt.livekit.cloud
+  - DOMAIN,o33249.ingest.sentry.io
+  - DOMAIN,openaiapi-site.azureedge.net
+  - DOMAIN,sfo3.turn.livekit.cloud
+  - DOMAIN,chat.openai.com.cdn.cloudflare.net
+  - DOMAIN-SUFFIX,chatgpt.com
+  - DOMAIN-SUFFIX,oaistatic.com
+  - DOMAIN-SUFFIX,oaiusercontent.com
+  - DOMAIN-SUFFIX,openai.com
+  - DOMAIN-KEYWORD,openaicom
+
+  # Copilot
+  - DOMAIN,api.githubcopilot.com
+  - DOMAIN,copilot-proxy.githubusercontent.com
+  - DOMAIN,copilot.microsoft.com
+  - DOMAIN,sydney.bing.com
+  - DOMAIN,www.bing.com
+
+  # Gemini
+  - DOMAIN,ai.google.dev
+  - DOMAIN,alkalimakersuite-pa.clients6.google.com
+  - DOMAIN,makersuite.google.com
+  - DOMAIN,proactivebackend-pa.googleapis.com
+  - DOMAIN-SUFFIX,gemini.google.com
+  - DOMAIN-SUFFIX,aistudio.google.com
+  - DOMAIN-SUFFIX,bard.google.com
+  - DOMAIN-SUFFIX,apis.google.com
+
+  # Claude
+  - DOMAIN,servd-anthropic-website.b-cdn.net
+  - DOMAIN-SUFFIX,anthropic.com
+  - DOMAIN-SUFFIX,claude.ai
+
+  # JetBrains AI
+  - DOMAIN-SUFFIX,grazie.ai
+
+  # Meta
+  - DOMAIN,imagine.meta.com
+  - DOMAIN-SUFFIX,meta.ai
