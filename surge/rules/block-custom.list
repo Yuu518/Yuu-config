@@ -22,4 +22,6 @@ DOMAIN-SUFFIX,music.httpdns.c.163.com
 DOMAIN-SUFFIX,szbdyd.com
 DOMAIN-SUFFIX,mcdn.bilivideo.com
 DOMAIN-SUFFIX,mcdn.bilivideo.cn
+DOMAIN-SUFFIX,in-addr.arpa
+DOMAIN-SUFFIX,ip6.arpa
 AND,((URL-REGEX,^cn-),(DOMAIN-SUFFIX,bilivideo.com),(DOMAIN-SUFFIX,bilivideo.cn))
