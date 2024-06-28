@@ -2,9 +2,18 @@
   "version": 1,
   "rules": [
     {
-      "domain_suffix": [
-        "steamserver.net",
-        "cm.steampowered.com"
+      "domain": "test-ipv6.com",
+      "domain_suffix": ".test-ipv6.com",
+      "domain_keyword": [
+        "ntp",
+        "wx.qlogo",
+        "weixin",
+        "wechat",
+        "wxpay",
+        "wxmp",
+        "miniprogram",
+        "tencent",
+        "tenpay"
       ]
     }
   ]

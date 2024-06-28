@@ -20,7 +20,7 @@
         "httpdns.push.oppomobile.com",
         "httpdns.volcengineapi.com",
         "httpsdns.baidu.com",
-        "kuaishou.httpdns.pro",
+        "httpdns.pro",
         "lofter.httpdns.c.163.com",
         "music.httpdns.c.163.com"
       ],
@@ -45,17 +45,18 @@
         ".httpdns.push.oppomobile.com",
         ".httpdns.volcengineapi.com",
         ".httpsdns.baidu.com",
-        ".kuaishou.httpdns.pro",
+        ".httpdns.pro",
         ".lofter.httpdns.c.163.com",
         ".music.httpdns.c.163.com"
-      ]
+      ],
+      "domain_keyword": "httpdns"
     },
     {
       "type": "logical",
       "mode": "and",
       "rules": [
         {
-          "domain_regex": "^cn-"
+          "domain_regex": "^cn"
         },
         {
           "domain_suffix": [
