@@ -9,76 +9,48 @@
     "fakeip": {
       "enabled": true,
       "inet4_range": "198.18.0.0/15",
-      "inet6_range": "fc00::/18"
+      "inet6_range": "fc00::/18",
+      "exclude_rule": {
+        "domain_keyword": [
+          "stun",
+          "ntp",
+          "time"
+        ],
+        "domain_suffix": [
+          "market.xiaomi.com"
+        ]
+      }
     },
     "servers": [
       {
-        "tag": "OpenDns",
-        "address": "tcp://208.67.220.220",
+        "tag": "Abroad-Dns",
+        "address": [
+          "tcp://doh.opendns.com",
+          "tcp://dns.google",
+          "tcp://dns.cloudflare.com",
+          "tcp://dns11.quad9.net"
+        ],
         "detour": "Proxy"
       },
       {
-        "tag": "Quad9",
-        "address": "tcp://9.9.9.11",
-        "detour": "Proxy"
+        "tag": "ProxyServer-Dns",
+        "address": "https://dns.alidns.com/dns-query",
+        "detour": "BaiduDirect-Public"
       },
       {
-        "tag": "Quad101",
-        "address": "tcp://101.101.101.101",
-        "detour": "Proxy"
+        "tag": "UnknowDomain-Dns",
+        "address": [
+          "https://dns.alidns.com/dns-query",
+          "https://dns.pub/dns-query"
+        ],
+        "detour": "BaiduDirect-Public"
       },
       {
-        "tag": "Cloudflare",
-        "address": "tcp://1.0.0.1",
-        "detour": "Proxy"
-      },
-      {
-        "tag": "Google-Dns",
-        "address": "tcp://8.8.8.8",
-        "detour": "Proxy"
-      },
-      {
-        "tag": "Google-Dot-ecs",
-        "address": "tls://8.8.4.4:853",
-        "client_subnet": "1.14.5.14",
-        "detour": "Proxy"
-      },
-      {
-        "tag": "Quad9-ecs",
-        "address": "tcp://9.9.9.11",
-        "client_subnet": "1.14.5.14",
-        "detour": "Proxy"
-      },
-      {
-        "tag": "Quad9-Doh-ecs",
-        "address": "https://9.9.9.11/dns-query",
-        "client_subnet": "1.14.5.14",
-        "detour": "Proxy"
-      },
-      {
-        "tag": "Quad9-Dot-ecs",
-        "address": "tls://9.9.9.11:853",
-        "client_subnet": "1.14.5.14",
-        "detour": "Proxy"
-      },
-      {
-        "tag": "AliDns-doh3",
-        "address": "h3://223.5.5.5/dns-query",
-        "detour": "Direct"
-      },
-      {
-        "tag": "Dnspod-doh",
-        "address": "https://120.53.53.53/dns-query",
-        "detour": "Direct"
-      },
-      {
-        "tag": "AliDns",
-        "address": "223.5.5.5",
-        "detour": "Direct"
-      },
-      {
-        "tag": "Dnspod",
-        "address": "119.29.29.29",
+        "tag": "Local-Dns",
+        "address": [
+          "dns.alidns.com",
+          "dnspod.dns"
+        ],
         "detour": "Direct"
       },
       {
@@ -87,108 +59,214 @@
       },
       {
         "tag": "BlockDns",
-        "address": "RCode://success"
+        "address": "rcode://success"
       }
     ],
+    "hosts": {
+      "doh.opendns.com": [
+        "208.67.222.222",
+        "208.67.220.220",
+        "2620:119:35::35",
+        "2620:119:53::53"
+      ],
+      "dns.cloudflare.com": [
+        "1.1.1.1",
+        "1.0.0.1",
+        "2606:4700:4700::1111",
+        "2606:4700:4700::1001"
+      ],
+      "dns.google": [
+        "8.8.8.8",
+        "8.8.4.4",
+        "2001:4860:4860::8888",
+        "2001:4860:4860::8844"
+      ],
+      "dns11.quad9.net": [
+        "9.9.9.11",
+        "149.112.112.11",
+        "2620:fe::11",
+        "2620:fe::fe:11"
+      ],
+      "dns.alidns.com": [
+        "223.5.5.5",
+        "223.6.6.6",
+        "2400:3200::1",
+        "2400:3200:baba::1"
+      ],
+      "dns.pub": [
+        "1.12.12.12",
+        "120.53.53.53"
+      ],
+      "dnspod.dns": [
+        "119.29.29.29",
+        "2402:4e00::"
+      ]
+    },
     "rules": [
       {
+        "outbound": [
+          "BaiduDirect-Public",
+          "Direct"
+        ],
+        "server": "Local-Dns"
+      },
+      {
         "outbound": "any",
-        "server": [
-          "AliDns-doh3",
-          "Dnspod-doh"
-        ]
+        "server": "ProxyServer-Dns"
       },
       {
         "rule_set": [
           "category-ads-all-domain",
           "block-custom"
         ],
+        "rewrite_ttl": 0,
         "server": "BlockDns",
         "disable_cache": true
       },
       {
+        "clash_mode": "Rule-FakeIP",
         "query_type": [
           "A",
           "AAAA"
         ],
         "server": "FakeDns",
-        "disable_cache": true,
-        "rewrite_ttl": 0
+        "rewrite_ttl": 0,
+        "disable_cache": true
       },
       {
-        "rule_set": [
-          "proxy-custom",
-          "geolocation-cn@!cn-domain",
-          "geolocation-!cn-domain"
+        "clash_mode": "Rule-Mixed",
+        "query_type": [
+          "A",
+          "AAAA"
         ],
-        "server": [
-          "Cloudflare",
-          "Google-Dns",
-          "OpenDns",
-          "Quad101",
-          "Quad9"
-        ]
+        "rule_set": [
+          "proxy-domain-custom",
+          "youtube-domain",
+          "bilibili-domain",
+          "netflix-domain",
+          "bahamut-domain",
+          "ai-all-domain",
+          "microsoft-domain",
+          "google-domain",
+          "geolocation-cn@!cn-domain"
+        ],
+        "server": "FakeDns",
+        "rewrite_ttl": 0,
+        "disable_cache": true
       },
       {
+        "clash_mode": [
+          "Rule-FakeIP",
+          "Rule-Mixed"
+        ],
+        "rule_set": [
+          "proxy-domain-custom",
+          "youtube-domain",
+          "bilibili-domain",
+          "netflix-domain",
+          "bahamut-domain",
+          "ai-all-domain",
+          "microsoft-domain",
+          "google-domain",
+          "geolocation-cn@!cn-domain"
+        ],
+        "server": "Abroad-Dns"
+      },
+      {
+        "clash_mode": "Rule-Mixed",
+        "query_type": [
+          "A",
+          "AAAA"
+        ],
+        "rule_set": "geolocation-!cn-domain",
+        "server": "FakeDns",
+        "rewrite_ttl": 0,
+        "disable_cache": true
+      },
+      {
+        "clash_mode": [
+          "Rule-FakeIP",
+          "Rule-Mixed"
+        ],
+        "rule_set": "geolocation-!cn-domain",
+        "server": "Abroad-Dns"
+      },
+      {
+        "clash_mode": [
+          "Rule-FakeIP",
+          "Rule-Mixed"
+        ],
+        "rule_set": [
+          "push-domain",
+          "direct-domain-custom",
+          "geolocation-!cn@cn-domain",
+          "cn-domain"
+        ],
+        "server": "Local-Dns"
+      },
+      {
+        "clash_mode": "Rule-FakeIP",
         "fallback_rules": [
           {
             "rule_set": [
-              "cn-ip",
-              "push-ip"
-            ]
+              "push-ip",
+              "cn-ip"
+            ],
+            "server": "Local-Dns"
+          },
+          {
+            "match_all": true
+          }
+        ],
+        "allow_fallthrough": true,
+        "server": "UnknowDomain-Dns"
+      },
+      {
+        "clash_mode": "Rule-Mixed",
+        "fallback_rules": [
+          {
+            "rule_set": [
+              "push-ip",
+              "cn-ip"
+            ],
+            "server": "Local-Dns"
           },
           {
             "match_all": true,
-            "server": [
-              "Cloudflare",
-              "Google-Dns",
-              "OpenDns",
-              "Quad101",
-              "Quad9"
-            ]
+            "server": "FakeDns",
+            "rewrite_ttl": 0,
+            "disable_cache": true
+          },
+          {
+            "match_all": true
           }
         ],
-        "server": [
-          "Google-Dot-ecs",
-          "Quad9-ecs",
-          "Quad9-Doh-ecs",
-          "Quad9-Dot-ecs"
-        ]
+        "allow_fallthrough": true,
+        "server": "UnknowDomain-Dns"
       },
       {
         "domain_keyword": ".",
-        "server": [
-          "AliDns",
-          "Dnspod"
-        ]
+        "server": "Abroad-Dns"
       }
     ],
-    "final": [
-      "Cloudflare",
-      "Google-Dns",
-      "OpenDns",
-      "Quad101",
-      "Quad9"
-    ],
+    "independent_cache": true,
     "reverse_mapping": true,
-    "strategy": "ipv4_only"
+    "mapping_override": true,
+    "lazy_cache": true
   },
   "inbounds": [
     {
-      "tag": "Sing",
+      "tag": "singBox",
       "type": "tun",
-      "interface_name": "sing-box",
+      "interface_name": "Origin",
       "inet4_address": "172.19.0.1/16",
-      "inet4_route_exclude_address": [
-        "0.0.0.0/8",
-        "127.0.0.0/8"
-      ],
-      "mtu": 1500,
+      "inet6_address": "2001:18::/18",
       "strict_route": false,
       "auto_route": true,
+      "mtu": 1500,
       "stack": "system",
       "sniff": true,
-      "always_resolve_udp": true,
+      "sniff_override_destination": false,
       "sniff_override_rules": [
         {
           "type": "logical",
@@ -208,6 +286,13 @@
           ]
         }
       ]
+    },
+    {
+      "tag": "Mixed",
+      "type": "mixed",
+      "listen": "::",
+      "listen_port": 10086,
+      "sniff": true
     }
   ],
   "outbounds": [
@@ -224,6 +309,16 @@
       "type": "dns"
     },
     {
+      "tag": "BaiduDirect-Public",
+      "type": "http",
+      "server": "cloudnproxy.n.shifen.com",
+      "server_port": 443,
+      "headers": {
+        "X-T5-Auth": "683556433",
+        "Host": "153.3.236.22:443"
+      }
+    },
+    {
       "tag": "Proxy",
       "type": "selector",
       "outbounds": [
@@ -232,6 +327,8 @@
         "Singapore",
         "Japan",
         "United States",
+        "Europe",
+        "自建",
         "Other"
       ]
     },
@@ -239,8 +336,11 @@
       "tag": "Telegram",
       "type": "selector",
       "outbounds": [
-        "Hong Kong",
-        "United States"
+        "Proxy",
+        "Singapore",
+        "United States",
+        "Europe",
+        "自建"
       ]
     },
     {
@@ -273,6 +373,7 @@
         "Direct",
         "Hong Kong",
         "Taiwan",
+        "自建",
         "Other"
       ]
     },
@@ -290,79 +391,52 @@
       ]
     },
     {
-      "tag": "Steam",
-      "type": "selector",
-      "outbounds": [
-        "Proxy",
-        "Hong Kong",
-        "Taiwan",
-        "Singapore",
-        "Japan",
-        "United States",
-        "Other",
-        "Direct"
-      ]
-    },
-    {
-      "tag": "Discord",
-      "type": "selector",
-      "outbounds": [
-        "Proxy",
-        "Hong Kong",
-        "Taiwan",
-        "Singapore",
-        "Japan",
-        "United States"
-      ]
-    },
-    {
-      "tag": "Spotify",
-      "type": "selector",
-      "outbounds": [
-        "Proxy",
-        "Hong Kong",
-        "Taiwan",
-        "Singapore",
-        "Japan",
-        "United States"
-      ]
-    },
-    {
       "tag": "Hong Kong",
       "type": "selector",
-      "includes": "香港|HK|Hong Kong|🇭🇰",
+      "includes": "香港|^HK|Hong Kong|🇭🇰",
       "use_all_providers": true
     },
     {
       "tag": "Taiwan",
       "type": "selector",
-      "includes": "台湾|Taiwan|🇹🇼|🇨🇳",
+      "includes": "台湾|Taiwan|🇹🇼|🇨🇳|^TW",
       "use_all_providers": true
     },
     {
       "tag": "Singapore",
       "type": "selector",
-      "includes": "新加坡|狮城|SG|Singapore|🇸🇬",
+      "includes": "新加坡|狮城|^SG|Singapore|🇸🇬",
       "use_all_providers": true
     },
     {
       "tag": "Japan",
       "type": "selector",
-      "includes": "日本|JP|Japan|🇯🇵",
+      "includes": "日本|^JP|Japan|🇯🇵",
       "use_all_providers": true
     },
     {
       "tag": "United States",
       "type": "selector",
-      "includes": "美国|United States|USA|🇺🇸",
+      "includes": "美国|United States|🇺🇸|^US",
+      "use_all_providers": true
+    },
+    {
+      "tag": "Europe",
+      "type": "selector",
+      "includes": "France|Germany|UK|Switzerland|Bulgaria|瑞士|法国|德国",
       "use_all_providers": true
     },
     {
       "tag": "Other",
       "type": "selector",
-      "includes": "Germany|Türkiye|土耳其|法国",
-      "excludes": "香港|HK|Hong Kong|🇭🇰|日本|JP|Japan|🇯🇵|美|US|United States|🇺🇸|新加坡|狮城|SG|Singapore|🇸🇬|台湾|🇹🇼|🇨🇳|Taiwan|Traffic|Expire|GB",
+      "includes": "Turkey|土耳其|澳大利亚|Australia|Argentina|阿根廷|韩国|Korea",
+      "excludes": "香港|^HK|Hong Kong|🇭🇰|日本|^JP|Japan|🇯🇵|美国|^US|United States|🇺🇸|新加坡|狮城|^SG|Singapore|🇸🇬|台湾|🇹🇼|🇨🇳|Taiwan|France|法国|德国|Germany|UK|Switzerland|瑞士|Bulgaria|Traffic|Expire|^GB",
       "use_all_providers": true
+    },
+    {
+      "tag": "自建",
+      "type": "selector",
+      "providers": "自建"
     }
   ],
   "route": {
@@ -373,6 +447,15 @@
         "format": "binary",
         "url": "https://github.com/Yuu518/sing-box-rules/raw/rule_set/rule_set_site/category-ads-all.srs",
         "path": "./RuleProviders/category-ads-all-domain.srs",
+        "download_detour": "Proxy",
+        "update_interval": "24h"
+      },
+      {
+        "tag": "block-custom",
+        "type": "remote",
+        "format": "source",
+        "url": "https://raw.githubusercontent.com/Yuu518/Yuu-config/master/sing-box/RuleProviders/block-custom.json",
+        "path": "./RuleProviders/block-custom.json",
         "download_detour": "Proxy",
         "update_interval": "24h"
       },
@@ -431,47 +514,11 @@
         "update_interval": "24h"
       },
       {
-        "tag": "steam-domain",
+        "tag": "ai-all-domain",
         "type": "remote",
         "format": "binary",
-        "url": "https://github.com/Yuu518/sing-box-rules/raw/rule_set/rule_set_site/steam.srs",
-        "path": "./RuleProviders/steam-domain.srs",
-        "download_detour": "Proxy",
-        "update_interval": "24h"
-      },
-      {
-        "tag": "openai-domain",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://github.com/Yuu518/sing-box-rules/raw/rule_set/rule_set_site/openai.srs",
-        "path": "./RuleProviders/openai-domain.srs",
-        "download_detour": "Proxy",
-        "update_interval": "24h"
-      },
-      {
-        "tag": "anthropic-domain",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://github.com/Yuu518/sing-box-rules/raw/rule_set/rule_set_site/anthropic.srs",
-        "path": "./RuleProviders/anthropic-domain.srs",
-        "download_detour": "Proxy",
-        "update_interval": "24h"
-      },
-      {
-        "tag": "discord-domain",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://github.com/Yuu518/sing-box-rules/raw/rule_set/rule_set_site/discord.srs",
-        "path": "./RuleProviders/discord-domain.srs",
-        "download_detour": "Proxy",
-        "update_interval": "24h"
-      },
-      {
-        "tag": "spotify-domain",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://github.com/Yuu518/sing-box-rules/raw/rule_set/rule_set_site/spotify.srs",
-        "path": "./RuleProviders/spotify-domain.srs",
+        "url": "https://github.com/Yuu518/sing-box-rules/raw/rule_set/rule_set_site/ai-all.srs",
+        "path": "./RuleProviders/ai-all-domain.srs",
         "download_detour": "Proxy",
         "update_interval": "24h"
       },
@@ -508,15 +555,6 @@
         "format": "binary",
         "url": "https://github.com/Yuu518/sing-box-rules/raw/rule_set/rule_set_site/bilibili.srs",
         "path": "./RuleProviders/bilibili-domain.srs",
-        "download_detour": "Proxy",
-        "update_interval": "24h"
-      },
-      {
-        "tag": "apple@cn-domain",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://github.com/Yuu518/sing-box-rules/raw/rule_set/rule_set_site/apple@cn.srs",
-        "path": "./RuleProviders/apple@cn-domain.srs",
         "download_detour": "Proxy",
         "update_interval": "24h"
       },
@@ -566,45 +604,69 @@
         "update_interval": "24h"
       },
       {
-        "tag": "proxy-custom",
-        "path": "./RuleProviders/proxy-custom.json",
-        "type": "local",
-        "format": "source"
+        "tag": "direct-domain-custom",
+        "type": "remote",
+        "format": "source",
+        "url": "https://raw.githubusercontent.com/Yuu518/Yuu-config/master/sing-box/RuleProviders/direct-domain-custom.json",
+        "path": "./RuleProviders/direct-domain-custom.json",
+        "download_detour": "Proxy",
+        "update_interval": "24h"
       },
       {
-        "tag": "direct-domain",
-        "path": "./RuleProviders/direct-domain.json",
-        "type": "local",
-        "format": "source"
+        "tag": "proxy-domain-custom",
+        "type": "remote",
+        "format": "source",
+        "url": "https://raw.githubusercontent.com/Yuu518/Yuu-config/master/sing-box/RuleProviders/proxy-domain-custom.json",
+        "path": "./RuleProviders/proxy-domain-custom.json",
+        "download_detour": "Proxy",
+        "update_interval": "24h"
       },
       {
         "tag": "push-domain",
+        "type": "remote",
+        "format": "source",
+        "url": "https://raw.githubusercontent.com/Yuu518/Yuu-config/master/sing-box/RuleProviders/push-domain.json",
         "path": "./RuleProviders/push-domain.json",
-        "type": "local",
-        "format": "source"
+        "download_detour": "Proxy",
+        "update_interval": "24h"
       },
       {
         "tag": "push-ip",
+        "type": "remote",
+        "format": "source",
+        "url": "https://raw.githubusercontent.com/Yuu518/Yuu-config/master/sing-box/RuleProviders/push-ip.json",
         "path": "./RuleProviders/push-ip.json",
-        "type": "local",
-        "format": "source"
+        "download_detour": "Proxy",
+        "update_interval": "24h"
       },
       {
         "tag": "skip-override",
+        "type": "remote",
+        "format": "source",
+        "url": "https://raw.githubusercontent.com/Yuu518/Yuu-config/master/sing-box/RuleProviders/skip-override.json",
         "path": "./RuleProviders/skip-override.json",
-        "type": "local",
-        "format": "source"
+        "download_detour": "Proxy",
+        "update_interval": "24h"
       },
       {
-        "tag": "block-custom",
-        "path": "./RuleProviders/block-custom.json",
+        "tag": "block-ip-custom",
         "type": "local",
-        "format": "source"
+        "format": "source",
+        "path": "./RuleProviders/block-ip-custom.json"
       }
     ],
     "rules": [
       {
-        "protocol": "dns",
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "protocol": "dns"
+          },
+          {
+            "port": 53
+          }
+        ],
         "outbound": "Dns"
       },
       {
@@ -615,8 +677,12 @@
         "outbound": "Block"
       },
       {
-        "rule_set": "telegram-domain",
-        "outbound": "Telegram"
+        "protocol": "quic",
+        "outbound": "Block"
+      },
+      {
+        "rule_set": "direct-domain-custom",
+        "outbound": "Direct"
       },
       {
         "rule_set": "youtube-domain",
@@ -639,30 +705,15 @@
         "outbound": "Proxy"
       },
       {
-        "rule_set": "steam-domain",
-        "outbound": "Steam"
-      },
-      {
-        "rule_set": [
-          "openai-domain",
-          "anthropic-domain"
-        ],
+        "rule_set": "ai-all-domain",
         "outbound": "United States"
-      },
-      {
-        "rule_set": "discord-domain",
-        "outbound": "Discord"
-      },
-      {
-        "rule_set": "spotify-domain",
-        "outbound": "Spotify"
       },
       {
         "rule_set": "google-domain",
         "outbound": "Google"
       },
       {
-        "rule_set": "proxy-custom",
+        "rule_set": "proxy-domain-custom",
         "outbound": "Japan"
       },
       {
@@ -675,22 +726,34 @@
       {
         "rule_set": [
           "push-domain",
-          "direct-domain",
           "geolocation-!cn@cn-domain",
           "cn-domain"
         ],
         "outbound": "Direct"
       },
       {
+        "ip_is_private": true,
+        "skip_resolve": true,
+        "outbound": "Direct"
+      },
+      {
+        "rule_set": "block-ip-custom",
+        "skip_resolve": true,
+        "outbound": "Block"
+      },
+      {
         "rule_set": "telegram-ip",
+        "skip_resolve": true,
         "outbound": "Telegram"
       },
       {
         "rule_set": "netflix-ip",
+        "skip_resolve": true,
         "outbound": "Netflix"
       },
       {
         "rule_set": "google-ip",
+        "skip_resolve": true,
         "outbound": "Google"
       },
       {
@@ -698,16 +761,14 @@
           "push-ip",
           "cn-ip"
         ],
-        "outbound": "Direct"
-      },
-      {
-        "ip_is_private": true,
+        "skip_resolve": true,
         "outbound": "Direct"
       }
     ],
     "final": "Proxy",
     "auto_detect_interface": true,
     "find_process": true,
+    "concurrent_dial": true,
     "default_mark": 2333
   },
   "experimental": {
@@ -718,28 +779,9 @@
     "clash_api": {
       "external_controller": "0.0.0.0:9909",
       "external_ui": "Dashboard",
-      "secret": "singBox"
+      "secret": "singBox",
+      "default_mode": "Rule-Mixed"
     }
   },
-  "outbound_providers": [
-    {
-      "tag": "http",
-      "type": "http",
-      "download_url": "url",
-      "path": "./ProxyProviders/http.json",
-      "healthcheck_interval": "10m"
-    },
-    {
-      "tag": "file",
-      "type": "file",
-      "path": "./ProxyProviders/file.json",
-      "healthcheck_interval": "10m"
-    },
-    {
-      "tag": "自建",
-      "type": "file",
-      "path": "./ProxyProviders/自建.json",
-      "healthcheck_interval": "10m"
-    }
-  ]
+  "outbound_providers": []
 }
