@@ -70,7 +70,7 @@
       "mode": "and",
       "rules": [
         {
-          "domain_regex": "^cn"
+          "domain_regex": "^cn-"
         },
         {
           "domain_suffix": [
