@@ -30,9 +30,9 @@ alkalimakersuite-pa.clients6.google.com
 makersuite.google.com
 
 # Claude
-servd-anthropic-website.b-cdn.net
 anthropic.com
 claude.ai
+full:servd-anthropic-website.b-cdn.net
 
 # JetBrains AI
 grazie.ai
