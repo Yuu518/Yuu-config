@@ -173,6 +173,8 @@ go-mpulse.net
 9c9media.com
 
 # ---------- > Japan Media
+# > NHK+
+nhk.jp
 # > DMM
 dmm-extension.com
 dmm.co.jp
@@ -199,9 +201,6 @@ abema-tv.com
 dmc.nico
 nicovideo.jp
 nimg.jp
-# > Music.jp
-music.jp
-music-book.jp
 # > Telasa
 telasa.jp
 kddi-video.com
@@ -233,6 +232,8 @@ gyao.yahoo.co.jp
 wowow.co.jp
 # > Videomarket
 videomarket.jp
+# > D Anime Store
+animestore.docomo.ne.jp
 # > Fuji TV
 fujitv.co.jp
 stream.ne.jp
@@ -244,12 +245,23 @@ smartstream.ne.jp
 clubdam.com
 # > J:com On Demand
 id.zaq.ne.jp
+# > AnimeFesta
+api-animefesta.iowl.jp
+# > Lemino
+if.lemino.docomo.ne.jp
+# > Rakuten TV JP
+rakuten.co.jp
 # > Games
 cygames.jp
 konosubafd.jp
 colorfulpalette.org
 worldflipper.jp
 jujutsuphanpara.jp
+# > Mora
+mora.jp
+# > Music.jp
+music.jp
+music-book.jp
 # > Reads 
 data-cloudauthoring.magazine.rakuten.co.jp
 
@@ -570,7 +582,7 @@ i-viaplay-com.akamaized.net
 viaplay.com
 viaplay.pl
 mtg-api.com
-# > GB:Sky GO /<replace with groupname>SkyGONZ/<replace with groupname>
+# > GB:Sky GO SkyGONZ
 sky.com
 # > GB:BritBox !Against US/AU!
 vod-dash-ntham-comm-live.akamaized.net
@@ -696,8 +708,6 @@ hbogoasia.tw
 hoy.tv
 # > BiliBili 
 bilibili.com
-
-
 
 # ---------- > South America Media
 # Star+
