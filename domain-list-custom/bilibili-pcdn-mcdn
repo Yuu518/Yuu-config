@@ -1,3 +1,4 @@
 szbdyd.com
+h2.smtcdns.net
 regexp:.+\.mcdn\.bilivideo\.(com|cn)$
 regexp:^cn-[a-z]+-[a-z]+-\d{2}-?\d{0,2}\.bilivideo\.(com|cn)$
