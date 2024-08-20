@@ -66,6 +66,8 @@ dfp6rglgjqszk.cloudfront.net
 d3o7oi00quuwqu.cloudfront.net
 mobileanalytics.us-east-1.amazonaws.com
 viu.com
+# > Instagram
+instagram.com
 # > iQiyi
 71.am
 iq.com
@@ -76,16 +78,6 @@ ppsimg.com
 qiyi.com
 qiyipic.com
 qy.net
-# > Tiktok
-byteoversea.com
-ibytedtos.com
-ipstatp.com
-muscdn.com
-musical.ly
-tiktok.com
-tik-tokapi.com
-tiktokcdn.com
-tiktokv.com
 
 # ---------- > Taiwan Media
 # > KKTV
@@ -182,7 +174,6 @@ ds-vod-abematv.akamaized.net
 vod-abematv.akamaized.net
 ameba.jp
 hayabusa.io
-vod-abematv.akamaized.net
 bucketeer.jp
 abema.adx.promo
 hayabusa.media
@@ -572,7 +563,7 @@ i-viaplay-com.akamaized.net
 viaplay.com
 viaplay.pl
 mtg-api.com
-# > GB:Sky GO SkyGONZ
+# > GB:Sky GO /<replace with groupname>SkyGONZ/<replace with groupname>
 sky.com
 # > GB:BritBox !Against US/AU!
 vod-dash-ntham-comm-live.akamaized.net
@@ -813,6 +804,10 @@ kaltura.com
 mxplayer.in
 # > IN:Tata Play
 tataplay.com
+# > IN:Zee5
+zee5.com
+# > IN:Jio Cinema
+content-jiovoot.voot.com
 # > UAE:shahid
 mbc.net
 npaw.com
