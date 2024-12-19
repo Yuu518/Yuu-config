@@ -17,8 +17,6 @@ regexp:^chatgpt-async-webps-prod-\S+-\d+\.webpubsub\.azure\.com$
 api.githubcopilot.com
 copilot-proxy.githubusercontent.com
 copilot.microsoft.com
-sydney.bing.com
-www.bing.com
 
 # Gemini
 deepmind.com
