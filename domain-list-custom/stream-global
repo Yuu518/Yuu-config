@@ -1,0 +1,259 @@
+include:youtube
+include:disney
+include:discoveryplus
+include:netflix
+include:dmm
+include:hulu
+include:bahamut
+include:hbo
+include:iqiyi
+include:abema
+include:mytvsuper
+include:kktv
+include:tvb
+include:pornhub
+include:viu
+include:tidal
+include:kkbox
+include:soundcloud
+include:pbs
+
+# 4gtv
+4gtv.tv
+4gtvfreepc-cds.cdn.hinet.net
+4gtvfreepcvod-cds.cdn.hinet.net
+4gtvpc-cds.cdn.hinet.net
+4gtvpcvod-cds.cdn.hinet.net
+
+# discovery
+discoveryplus.co.uk
+
+# Amazon Prime Video
+d1v5ir2lpwr8os.cloudfront.net
+d22qjgkvxw22r6.cloudfront.net
+d25xi40x97liuc.cloudfront.net
+d27xxe7juh1us6.cloudfront.net
+dmqdd6hw24ucf.cloudfront.net
+aiv-cdn.net
+aiv-delivery.net
+amazonvideo.com
+atv-ext-eu.amazon.com
+atv-ext-fe.amazon.com
+atv-ext.amazon.com
+atv-ps-eu.amazon.co.uk
+atv-ps-eu.amazon.com
+atv-ps-fe.amazon.co.jp
+atv-ps-fe.amazon.com
+atv-ps.amazon.com
+primevideo.com
+pv-cdn.net
+video.a2z.com
+
+# All4
+channel4.com
+
+# Apple TV
+tv.apple.com
+full:apple-tv-plus-press.apple.com
+full:tv.applemusic.com
+full:ocvideo.apple.com
+full:play-edge.itunes.apple.com
+full:uts-api.itunes.apple.com
+full:np-edge.itunes.apple.com
+full:hls-amt.itunes.apple.com
+full:hls.itunes.apple.com
+full:linear.tv.apple.com
+
+# BBC
+bbc-reporting-api.app
+bbc.co.uk
+bbc.com
+bbc.in
+bbc.mp-pxcdn.com
+bbc.net.uk
+bbcfmt.s.llnwi.net
+bbci.co.uk
+bbcmedia.co.uk
+bbcpersian.com
+bbcverticals.com
+bidi.net.uk
+full:aod-pod-uk-live.akamaized.net
+full:as-dash-uk-live.akamaized.net
+full:as-hls-uk-live.akamaized.net
+full:ve-dash-uk-live.akamaized.net
+full:ve-uhd-push-uk-live.akamaized.net
+full:vod-dash-uk-live.akamaized.net
+full:vod-dash-ww-live.akamaized.net
+full:vod-hls-uk-live.akamaized.net
+full:vod-sub-uk-live.akamaized.net
+full:vod-thumb-uk-live.akamaized.net
+full:vod-thumb-ww-live.akamaized.net
+full:vs-cmaf-push-uk-live.akamaized.net
+full:vs-cmaf-pushb-ww-live.akamaized.net
+full:vs-hls-push-uk-live.akamaized.net
+full:vs-hls-pushb-uk-live.akamaized.net
+
+# My5
+my5.tv
+
+# WeTV
+wetv.vip
+wetvinfo.com
+
+# Vudu
+vudu.com
+
+# DAZN
+dazn-api.com
+dazn.com
+dazndn.com
+indazn.com
+indaznlab.com
+dcblivedazn.akamaized.net
+dcalivedazn.akamaized.net
+dca-ll-livedazn-dznlivejp.s.llnwi.net
+
+# encoreTVB
+encoretvb.com
+
+# fox
+fox.com
+fox.tv
+foxnews.com
+foxplus.com
+foxdcg.com
+full:staticasiafox.akamaized.net
+full:dashasiafox.akamaized.net
+full:foxnewsplayer-a.akamaihd.net
+
+# SHOWTIME
+paramountpluswithshowtime.com
+showtime.com
+showtimeanytime.com
+
+# ITV
+itv.com
+dnitv.com
+full:itvpnpmobile-a.akamaihd.net
+full:chuangcachecdnoversea-tw.inter.ptqy.gitv.tv
+full:akmcdnoversea-tw.inter.ptqy.gitv.tv
+
+# Crackle
+crackle.com
+
+# Deezer
+deezer.com
+
+# Friday TW
+ana.video.friday.tw
+video.friday.tw
+
+# Himalaya
+himalaya.com
+
+# JOOX
+joox.com
+
+# KKBOX
+kkbox-prime.com
+
+# Line TV
+linetv.tw
+
+# Naver TV
+naver.com
+navercorp.com
+
+# NHK Plus
+nhk.jp
+
+# Pandora
+pandora.com
+
+# Peacock TV
+peacocktv.com
+peacock.com
+
+# Paramount+
+paramountplus.com
+cbsi.live.ott.irdeto.com
+cbsplaylistserver.aws.syncbak.com
+cbsservice.aws.syncbak.com
+link.theplatform.com
+cbsaavideo.com
+cbsi.com
+cbsivideo.com
+pplusstatic.com
+
+# Overcast
+overcast.fm
+
+# Now E 
+nowe.com
+nowestatic.com
+
+# LiTV
+litv.tv
+ntd-tgc.cdn.hinet.net
+
+# > Hami Video
+cdn.hinet.net
+hamivideo.hinet.net
+scc.ott.hinet.net
+
+# Tiktok
+byteoversea.com
+ibytedtos.com
+ipstatp.com
+muscdn.com
+musical.ly
+tiktok.com
+tik-tokapi.com
+tiktokcdn.com
+tiktokv.com
+
+# Telasa
+telasa.jp
+kddi-video.com
+videopass.jp
+d2lmsumy47c8as.cloudfront.net
+
+# Fuji TV
+fujitv.co.jp
+stream.ne.jp
+
+# Radiko
+radiko.jp
+radionikkei.jp
+smartstream.ne.jp
+
+# > TVer
+tver.jp
+edge.api.brightcove.com
+players.brightcove.net
+gorin.jp
+screens-lab.jp
+tver.co.jp
+dogatch.jp
+
+# NicoNico
+dmc.nico
+nicodic.jp
+nicomanga.jp
+niconico.com
+nicoseiga.jp
+nicovideo.jp
+nimg.jp
+simg.jp
+
+# GYAO!
+gyao.yahoo.co.jp
+
+# WOWOW
+wowow.co.jp
+
+# Videomarket
+videomarket.jp
+
+# D Anime Store
+animestore.docomo.ne.jp
