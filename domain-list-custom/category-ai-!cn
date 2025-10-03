@@ -29,6 +29,7 @@ proactivebackend-pa.googleapis.com
 aida.googleapis.com
 aistudio.google.com
 makersuite.google.com
+full:api.google.com
 full:ai.google.dev
 full:alkalicore-pa.clients6.google.com
 full:alkalimakersuite-pa.clients6.google.com
@@ -53,6 +54,8 @@ meta.ai
 
 # Perplexity
 perplexity.ai
+pplx.ai
+full:pplx-res.cloudinary.com
 
 # Mistral AI
 chat.mistral.ai
@@ -61,3 +64,6 @@ mistral.ai
 
 # x-ai
 x.ai
+
+# TRAE
+trae.ai
